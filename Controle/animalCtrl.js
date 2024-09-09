@@ -1,5 +1,5 @@
-import Animal from "../Modelo/animal.js";
-import Adotante from "../Modelo/adotante.js";
+import Animal from '../Modelo/animal.js';
+
 
 export default class AnimalCtrl {
 
@@ -13,13 +13,12 @@ export default class AnimalCtrl {
             const especie = dados.especie;
             const dataNascimento = dados.dataNascimento;
             const dataCadastro = dados.dataCadastro;
-            const adotante_codigo = dados.adotante.codigo;
+            const categoria_codigo = dados.categoria.codigo;
 
             if (nome && raca && sexo && especie
-                && dataNascimento && dataCadastro && adotante_codigo > 0) {
-                const adotante = new Adotante(adotante_codigo);
+                && dataNascimento && dataCadastro && categoria_codigo > 0) {
                 const animal = new Animal(0, nome, raca, sexo, especie,
-                    dataNascimento, dataCadastro, adotante
+                    dataNascimento, dataCadastro, categoria_codigo
                 );
                 //resolver a promise
                 animal.gravar().then(() => {
@@ -32,14 +31,14 @@ export default class AnimalCtrl {
                     .catch((erro) => {
                         resposta.status(500).json({
                             "status": false,
-                            "mensagem": "Erro ao registrar o animal:" + erro.message
+                            "mensagem": "Erro ao registrar o animal: " + erro.message
                         });
                     });
             }
             else {
                 resposta.status(400).json({
                     "status": false,
-                    "mensagem": "Por favor, os dados do animal segundo a documentação da API!"
+                    "mensagem": "Por favor, forneça todos os dados do animal segundo a documentação da API!"
                 });
             }
         }
@@ -62,11 +61,12 @@ export default class AnimalCtrl {
             const especie = dados.especie;
             const dataNascimento = dados.dataNascimento;
             const dataCadastro = dados.dataCadastro;
-            const adotante_codigo = dados.adotante.codigo;
-            if (codigo && nome && raca && sexo && especie && dataNascimento && dataCadastro && adotante_codigo > 0) {
-                const adotante = new Adotante(adotante_codigo);
+            const categoria_codigo = dados.categoria.codigo;
+
+            if (codigo && nome && raca && sexo && especie && dataNascimento && dataCadastro && categoria_codigo > 0) {
                 const animal = new Animal(codigo, nome, raca, sexo, especie,
-                    dataNascimento, dataCadastro, codigo);
+                    dataNascimento, dataCadastro, categoria_codigo
+                );
                 //resolver a promise
                 animal.atualizar().then(() => {
                     resposta.status(200).json({
@@ -77,14 +77,14 @@ export default class AnimalCtrl {
                     .catch((erro) => {
                         resposta.status(500).json({
                             "status": false,
-                            "mensagem": "Erro ao atualizar o animal:" + erro.message
+                            "mensagem": "Erro ao atualizar o animal: " + erro.message
                         });
                     });
             }
             else {
                 resposta.status(400).json({
                     "status": false,
-                    "mensagem": "Por favor, informe todos os dados do animal segundo a documentação da API!"
+                    "mensagem": "Por favor, forneça todos os dados do animal segundo a documentação da API!"
                 });
             }
         }
@@ -104,7 +104,7 @@ export default class AnimalCtrl {
             if (codigo) {
                 const animal = new Animal(codigo);
                 //resolver a promise
-               animal.atualizar().then(() => {
+                animal.excluir().then(() => {
                     resposta.status(200).json({
                         "status": true,
                         "mensagem": "Animal excluído com sucesso!"
@@ -113,7 +113,7 @@ export default class AnimalCtrl {
                     .catch((erro) => {
                         resposta.status(500).json({
                             "status": false,
-                            "mensagem": "Erro ao excluir o animal:" + erro.message
+                            "mensagem": "Erro ao excluir o animal: " + erro.message
                         });
                     });
             }
@@ -131,7 +131,6 @@ export default class AnimalCtrl {
             });
         }
     }
-
 
     consultar(requisicao, resposta) {
         resposta.type('application/json');
