@@ -1,6 +1,4 @@
 import AdotanteDAO from "../Persistencia/adotanteDAO.js";
-import AnimalDAO from "../Persistencia/animalDAO.js";
-//não esqueça do .js no final da importação
 
 export default class Adotante {
     //definição dos atributos privados
