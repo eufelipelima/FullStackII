@@ -1,7 +1,8 @@
 import AnimalDAO from "../Persistencia/animalDAO.js";
-import Adotante from "./adotante.js";
+import Categoria from "./categoria.js"
 
-export default class Animal{
+export default class Animal {
+    // Definição dos atributos privados
     #codigo;
     #nome;
     #raca;
@@ -9,66 +10,73 @@ export default class Animal{
     #especie;
     #dataNascimento;
     #dataCadastro;
-    #adotante;
+    #categoria;
 
-
-    constructor(codigo=0,nome="", raca='', 
-                sexo='',especie='', dataNascimento ='', dataCadastro='', adotante=null
-                ){
-        this.#codigo=codigo;
-        this.#nome=nome;
-        this.#raca=raca;
-        this.#sexo=sexo;
-        this.#especie=especie;
-        this.#dataNascimento=dataNascimento;
-        this.#dataCadastro=dataCadastro;
-        this.#adotante=adotante;
+    constructor(
+        codigo = 0,
+        nome = '',
+        raca = '',
+        sexo = '',
+        especie = '',
+        dataNascimento = '',
+        dataCadastro = '',
+        categoria = 0
+    ) {
+        this.#codigo = codigo;
+        this.#nome = nome;
+        this.#raca = raca;
+        this.#sexo = sexo;
+        this.#especie = especie;
+        this.#dataNascimento = dataNascimento;
+        this.#dataCadastro = dataCadastro;
+        this.#categoria = categoria;
     }
 
-    get codigo(){
+    get codigo() {
         return this.#codigo;
     }
-    set codigo(novoCodigo){
+
+    set codigo(novoCodigo) {
         this.#codigo = novoCodigo;
     }
 
-    get nome(){
+    get nome() {
         return this.#nome;
     }
 
-    set nome(novoNome){
-        this.#nome=novoNome;
+    set nome(novoNome) {
+        this.#nome = novoNome;
     }
 
-    get raca(){
+    get raca() {
         return this.#raca;
     }
 
-    set raca(novaRaca){
-        this.#raca = novaRaca
+    set raca(novaRaca) {
+        this.#raca = novaRaca;
     }
 
-    get sexo(){
+    get sexo() {
         return this.#sexo;
     }
-    
-    set sexo(novoSexo){
-        this.#sexo = novoSexo
+
+    set sexo(novoSexo) {
+        this.#sexo = novoSexo;
     }
 
-    get especie(){
+    get especie() {
         return this.#especie;
     }
 
-    set especie(novaEspecie){
+    set especie(novaEspecie) {
         this.#especie = novaEspecie;
     }
 
-    get dataNascimento(){
+    get dataNascimento() {
         return this.#dataNascimento;
     }
 
-    set dataNascimento(novaDataNascimento){
+    set dataNascimento(novaDataNascimento) {
         this.#dataNascimento = novaDataNascimento;
     }
 
@@ -80,48 +88,48 @@ export default class Animal{
         this.#dataCadastro = novaDataCadastro;
     }
 
-    get adotante() {
-        return this.#adotante;
+    get categoria() {
+        return this.#categoria;
     }
 
-    set adotante(novoAdotante) {
-        if(novoAdotante instanceof Adotante){
-            this.#adotante = novoAdotante;
+    set categoria(novaCategoria) {
+        if(novaCategoria instanceof Categoria){
+            this.#categoria = novoAdotante;
         }
     }
 
-    toJSON(){
-        return {
-            codigo:this.#codigo,
-            nome:this.#nome,
-            raca:this.#raca,
-            sexo:this.#sexo,
-            especie:this.#especie,
-            dataNascimento:this.#dataNascimento,
-            dataCadastro:this.#dataCadastro,  
-            adotante:this.#adotante.toJSON()
-        }
-    }
+toJSON() {
+    return {
+        codigo: this.#codigo,
+        nome: this.#nome,
+        raca: this.#raca,
+        sexo: this.#sexo,
+        especie: this.#especie,
+        dataNascimento: this.#dataNascimento,
+        dataCadastro: this.#dataCadastro,
+        categoria: this.#categoria,
+    };
+}
 
-     //camada de modelo acessa a camada de persistencia
-     async gravar(){
-        const animalDAO = new AnimalDAO();
-        await animalDAO.gravar(this);
-     }
+async gravar() {
+    const animalDAO = new AnimalDAO();
+    await animalDAO.gravar(this);
+}
+
+async excluir() {
+    const animalDAO = new AnimalDAO();
+    await animalDAO.excluir(this);
+}
+
+async atualizar() {
+    const animalDAO = new AnimalDAO();
+    await animalDAO.atualizar(this);
+}
+
+async consultar(termo) {
+    const animalDAO = new AnimalDAO();
+    return await animalDAO.consultar(termo);
+}
  
-     async excluir(){
-        const animalDAO = new AnimalDAO();
-        await animalDAO.excluir(this);
-     }
- 
-     async alterar(){
-        const animalDAO = new AnimalDAO();
-        await animalDAO.atualizar(this);
-     }
- 
-     async consultar(termo){
-        const animalDAO = new AnimalDAO();
-        return await animalDAO.consultar(termo);
-     }
 
 }
